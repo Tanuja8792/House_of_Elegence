@@ -87,5 +87,8 @@ def order_success(request,order_id):
 
 def my_orders(request):
     email=request.GET.get("email","").strip()
-    orders=Order.objects.filter(email__iexact=email).order_by("-created_at") if email else Order.objects.none()
-    return render(request,"store/my_orders.html",{"orders":orders,"email":email})
+    order_id=request.GET.get("order_id","").strip()
+    orders=Order.objects.none()
+    if email and order_id.isdigit():
+        orders=Order.objects.filter(email__iexact=email,pk=int(order_id)).order_by("-created_at")
+    return render(request,"store/my_orders.html",{"orders":orders,"email":email,"order_id":order_id})
