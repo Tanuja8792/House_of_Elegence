@@ -1,60 +1,51 @@
 # House of Elegance
 
-A responsive women's fashion storefront built with HTML, CSS and JavaScript, integrated with Django for local development.
+A Django-powered fashion e-commerce demo inspired by modern fashion marketplaces.
 
 ## Features
-- Fashion homepage and seasonal hero section
-- Women's categories: Ethnic Wear, Western Wear, Dresses, Tops, Footwear and Accessories
-- Product cards with prices and discounts
-- Category filtering and product search
-- Wishlist and shopping-bag demo interactions
-- Responsive desktop and mobile layout
+- Responsive fashion storefront with category filtering and product search
+- Database-backed product catalogue with descriptions, image URLs, prices and automatic discount percentages
+- Session-based shopping cart with quantity updates and item removal
+- Checkout form with delivery address collection
+- Cash on Delivery demo order placement and order confirmation
+- Order history lookup by checkout email
+- Django admin management for products and orders
 
-## Run locally with Django
+## Run locally (Windows CMD)
 
-1. Open a terminal in the project folder.
-2. Create and activate a virtual environment (optional but recommended):
-
-   ```bash
-   python -m venv venv
-   ```
-
-   Windows CMD:
-
+1. Clone or download this repository and open the folder containing `manage.py`.
+2. Create and activate a virtual environment:
    ```cmd
+   py -m venv venv
    venv\Scripts\activate
    ```
-
 3. Install dependencies:
-
-   ```bash
+   ```cmd
    pip install -r requirements.txt
    ```
-
-4. Apply database migrations:
-
-   ```bash
+4. Apply migrations and start the server:
+   ```cmd
    python manage.py migrate
-   ```
-
-5. Start the development server:
-
-   ```bash
    python manage.py runserver
    ```
+5. Visit http://127.0.0.1:8000/.
 
-6. Open http://127.0.0.1:8000/ in your browser.
+The first homepage visit seeds 12 sample fashion products into the database. Product records can be edited in Django admin after creating an admin account with `python manage.py createsuperuser`; open http://127.0.0.1:8000/admin/.
 
-## Project layout
+## Shopping flow
+Browse products → Add to Bag → Update quantities → Proceed to Checkout → Enter delivery details → Place Order → View confirmation.
 
-- `config/` — Django project settings and URL configuration
-- `store/` — Django homepage app
-- `templates/index.html` — Django-rendered storefront
-- `static/css/style.css` — website styling
-- `static/js/script.js` — product filtering and demo interactions
+Use the My Orders link and enter the same email used at checkout to find demo orders.
 
-The current shopping bag, wishlist and newsletter are front-end demonstrations. There is no database-backed product catalogue, customer account, payment gateway or order processing yet.
+## Important payment note
+Checkout currently supports **Cash on Delivery as a demonstration only**. It stores orders in the local database; it does not collect money, connect to a bank, or process live online payments. A real payment provider (such as Razorpay) requires a merchant account and server-side API keys before production use.
 
-## Note
+## Project structure
+- `config/` — Django project configuration
+- `store/models.py` — Product, Order and OrderItem database models
+- `store/views.py` — catalogue, cart, checkout and order views
+- `store/migrations/` — database schema migration
+- `templates/` — storefront and shopping pages
+- `static/css/` and `static/js/` — styling and small UI interactions
 
-The Django development server is for local development only. Set a secure environment-based secret key, configure allowed hosts, and use production settings before deployment.
+This is a learning/demo project. Before public deployment, configure a secure environment-based SECRET_KEY, DEBUG=False, production ALLOWED_HOSTS, HTTPS, email verification, privacy protections and a real payment integration.
